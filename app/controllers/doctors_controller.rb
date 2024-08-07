@@ -1,12 +1,28 @@
 class DoctorsController < ApplicationController
   before_action :set_doctor, only: %i[ check_in check_out show edit update destroy ]
+  skip_before_action :verify_authenticity_token, only: %i[ check_in check_out check_in_all]
+
 
   def check_in
     @doctor.check_in!
+
+     render plain: 'ok', status: :ok
   end
 
   def check_out
-    @doctor.check_in!
+    @doctor.check_out!
+
+    render plain: 'ok', status: :ok
+  end
+
+  def check_in_all
+    Doctor.update_all(on_duty: true)
+
+    render plain: 'ok', status: :ok
+  end
+
+  def on_duty
+    render plain: Doctor.on_duty.count, status: :ok
   end
 
   # GET /doctors or /doctors.json

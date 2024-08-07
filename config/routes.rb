@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   resources :doctors do
     put :check_in, on: :member
     put :check_out, on: :member
+    put :check_in_all, on: :collection
+    get :on_duty, on: :collection
   end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
