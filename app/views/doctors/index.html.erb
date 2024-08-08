@@ -2,13 +2,18 @@
 
 <h1>Doctors</h1>
 
-<div id="doctors">
+<table id="doctors">
   <% @doctors.each do |doctor| %>
-    <%= render doctor %>
-    <p>
-      <%= link_to "Show this doctor", doctor %>
-    </p>
+    <div style="display: flex; justify-content: space-between">
+      <%= link_to doctor.name, doctor %>
+
+      <% if doctor.on_duty %>
+        <%= button_to 'Check Out', check_out_doctor_path(doctor) %>
+      <% else %>
+        <%= button_to 'Check In', check_in_doctor_path(doctor), style: 'background-color: grey;' %>
+      <% end %>
+    </div>
   <% end %>
-</div>
+</table>
 
 <%= link_to "New doctor", new_doctor_path %>

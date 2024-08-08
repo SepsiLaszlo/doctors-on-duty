@@ -2,9 +2,9 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   resources :doctors do
-    put :check_in, on: :member
-    put :check_out, on: :member
-    put :check_in_all, on: :collection
+    post :check_in, on: :member
+    post :check_out, on: :member
+    post :check_in_all, on: :collection
     get :on_duty, on: :collection
   end
 

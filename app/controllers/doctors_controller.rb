@@ -6,13 +6,19 @@ class DoctorsController < ApplicationController
   def check_in
     @doctor.check_in!
 
-     render plain: 'ok', status: :ok
+    respond_to do |format|
+      format.html { redirect_to doctors_path }
+      format.json {  render plain: 'ok', status: :ok }
+    end
   end
 
   def check_out
     @doctor.check_out!
 
-    render plain: 'ok', status: :ok
+    respond_to do |format|
+      format.html { redirect_to doctors_path }
+      format.json {  render plain: 'ok', status: :ok }
+    end
   end
 
   def check_in_all
