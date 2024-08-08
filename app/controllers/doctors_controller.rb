@@ -2,6 +2,9 @@ class DoctorsController < ApplicationController
   before_action :set_doctor, only: %i[ check_in check_out show edit update destroy ]
   skip_before_action :verify_authenticity_token, only: %i[ check_in check_out check_in_all]
 
+  rescue_from StandardError do |exception|
+    redirect_to doctors_path, notice: exception.message
+  end
 
   def check_in
     @doctor.check_in!
