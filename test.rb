@@ -1,7 +1,7 @@
 require 'faraday'
 require 'pry'
 
-Faraday.put("http://localhost:3000/doctors/check_in_all")
+Faraday.post("http://localhost:3000/doctors/check_in_all")
 
 count = 0
 no_anomaly = true
@@ -9,7 +9,7 @@ while(no_anomaly)
   ids = (1..10)
   threads = ids.map do |id|
     Thread.new do
-      response = Faraday.put("http://localhost:3000/doctors/#{id}/check_out")
+      response = Faraday.post("http://localhost:3000/doctors/#{id%10+1}/check_out")
     end
   end
 
@@ -24,6 +24,6 @@ while(no_anomaly)
     no_anomaly = false
   else
     p "ITERATION: #{count+=1}  ON_DUTY: #{on_duty}"
-    Faraday.put("http://localhost:3000/doctors/check_in_all")
+    Faraday.post("http://localhost:3000/doctors/check_in_all")
   end
 end
