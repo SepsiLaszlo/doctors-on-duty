@@ -1,8 +1,6 @@
-<% if notice %>
-  <p class="notice disappear"><%= notice %></p>
-<% end %>
-
 <h1>Doctors</h1>
+
+<p class="notice">On duty: <%= @on_duty %> <%= notice ? " - #{notice}" : nil %></p>
 
 <table id="doctors">
   <% @doctors.each do |doctor| %>

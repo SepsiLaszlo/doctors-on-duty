@@ -37,6 +37,7 @@ class DoctorsController < ApplicationController
   # GET /doctors or /doctors.json
   def index
     @doctors = Doctor.all.order(:id)
+    @on_duty = @doctors.on_duty.count
   end
 
   # GET /doctors/1 or /doctors/1.json

@@ -13,22 +13,3 @@
  *= require_tree .
  *= require_self
  */
-
-.disappear {
-    /* Initial appearance */
-    opacity: 1;
-    animation: hideNotice 3s forwards;
-}
-
-/* Keyframes for hiding the notice */
-@keyframes hideNotice {
-    0% {
-        opacity: 1;
-    }
-    80% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-    }
-}
