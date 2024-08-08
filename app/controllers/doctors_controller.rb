@@ -27,7 +27,7 @@ class DoctorsController < ApplicationController
 
   # GET /doctors or /doctors.json
   def index
-    @doctors = Doctor.all
+    @doctors = Doctor.all.order(:id)
   end
 
   # GET /doctors/1 or /doctors/1.json
