@@ -1,29 +1,27 @@
 require 'faraday'
-require 'pry'
-
-Faraday.post("http://localhost:3000/doctors/check_in_all")
 
 count = 0
-no_anomaly = true
-while(no_anomaly)
-  ids = (1..10)
+ids = (1..10)
+
+while true
+  # Setting a consistent environment
+  Faraday.post("http://localhost:3000/doctors/check_in_all")
+
+  # Checkout doctors concurrently
   threads = ids.map do |id|
     Thread.new do
-      response = Faraday.post("http://localhost:3000/doctors/#{id%10+1}/check_out")
+      Faraday.post("http://localhost:3000/doctors/#{id}/check_out")
     end
   end
 
+  # Wait for each thread to finish
   threads.each { |thread| thread.join }
 
-  # check anomaly or reset
+  # Fetch and print how many doctors are on duty
   response = Faraday.get("http://localhost:3000/doctors/on_duty")
   on_duty = response.body.to_i
+  p "ITERATION: #{count += 1}  ON_DUTY: #{on_duty}"
 
-  if on_duty == 0
-    p "ITERATION: #{count+=1}  ON_DUTY: #{on_duty} - ANOMALY - ABORT"
-    no_anomaly = false
-  else
-    p "ITERATION: #{count+=1}  ON_DUTY: #{on_duty}"
-    Faraday.post("http://localhost:3000/doctors/check_in_all")
-  end
+  # Stop if an anomaly is detected
+  p 'ANOMALY' and break if on_duty == 0
 end
