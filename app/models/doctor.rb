@@ -9,7 +9,7 @@ class Doctor < ApplicationRecord
 
   def check_out!
     Doctor.transaction(isolation: :serializable) do
-      unless Doctor.on_duty.count - 1 >= MIN_DOCTORS_ON_DUTY
+      if Doctor.on_duty.count - 1 < MIN_DOCTORS_ON_DUTY
         raise "At least #{MIN_DOCTORS_ON_DUTY} doctor(s) must be on duty"
       end
 
